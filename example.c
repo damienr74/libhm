@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define MAKE_PAIR(x, size) ((pair){ .k = x, .ksize = sizeof(size) })
+#define MAKE_PAIR(x) ((pair){ .k = (x), .ksize = strlen(x) })
 
 struct student {
 	char *university;
@@ -14,10 +14,10 @@ struct student {
 static size_t khash(const pair *p)
 {
 	const struct student *st = p->k;
-	pair student = MAKE_PAIR(st->university, strlen(st->university));
+	pair student = MAKE_PAIR(st->university);
 	size_t uni_hash = hm_hash(&student);
 
-	student = MAKE_PAIR(st->student_id, strlen(st->student_id));
+	student = MAKE_PAIR(st->student_id);
 	size_t sid_hash = hm_hash(&student);
 
 	return ((uni_hash + sid_hash) << 5) ^ (uni_hash + sid_hash);
